@@ -2,6 +2,11 @@ package com.ngergis;
 
 import com.ngergis.service.ColoringService;
 
+import static com.ngergis.Colors.ANSI_BLUE_BACKGROUND;
+import static com.ngergis.Colors.ANSI_GREEN_BACKGROUND;
+import static com.ngergis.Colors.ANSI_RED_BACKGROUND;
+import static com.ngergis.Colors.ANSI_RESET;
+import static com.ngergis.Colors.ANSI_YELLOW_BACKGROUND;
 import static com.ngergis.Colors.B;
 import static com.ngergis.Colors.G;
 import static com.ngergis.Colors.R;
@@ -51,9 +56,32 @@ public class Coloring {
 
     private void printRaw(char[] raw) {
         for (char point : raw) {
-            System.out.print(point + " ");
+            printPoint(point);
         }
         System.out.println();
+    }
+
+    private void printPoint(char pointColor) {
+        if (B == pointColor) printBlue();
+        else if (G == pointColor) printGreen();
+        else if (R == pointColor) printRed();
+        else if (Y == pointColor) printYellow();
+    }
+
+    private void printBlue() {
+        System.out.print(ANSI_BLUE_BACKGROUND + " " + B + " " + ANSI_RESET);
+    }
+
+    private void printGreen() {
+        System.out.print(ANSI_GREEN_BACKGROUND + " " + G + " " + ANSI_RESET);
+    }
+
+    private void printRed() {
+        System.out.print(ANSI_RED_BACKGROUND + " " + R + " " + ANSI_RESET);
+    }
+
+    private void printYellow() {
+        System.out.print(ANSI_YELLOW_BACKGROUND + " " + Y + " " + ANSI_RESET);
     }
 
     private void coloringImage(char[][] image) {
