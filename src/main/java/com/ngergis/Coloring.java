@@ -32,8 +32,8 @@ public class Coloring {
 
             };
 
-    private int x = 3;
-    private int y = 4;
+    private int selectedX = 3;
+    private int selectedY = 1;
     private char newColor = B;
 
     public static void main(String[] arg) {
@@ -47,44 +47,59 @@ public class Coloring {
     }
 
     private void printImage(char[][] image) {
-        for (char[] row : image) {
-            printRaw(row);
+        for (int i = 0; i < image.length; i++) {
+            printRaw(image[i], i);
         }
         System.out.println();
         System.out.println();
     }
 
-    private void printRaw(char[] raw) {
-        for (char point : raw) {
-            printPoint(point);
+    private void printRaw(char[] raw, int x) {
+        for (int j = 0; j < raw.length; j++) {
+            printPoint(raw[j], x, j);
         }
         System.out.println();
     }
 
-    private void printPoint(char pointColor) {
-        if (B == pointColor) printBlue();
-        else if (G == pointColor) printGreen();
-        else if (R == pointColor) printRed();
-        else if (Y == pointColor) printYellow();
+    private void printPoint(char pointColor, int x, int y) {
+        if (B == pointColor) printBlue(x, y);
+        else if (G == pointColor) printGreen(x, y);
+        else if (R == pointColor) printRed(x, y);
+        else if (Y == pointColor) printYellow(x, y);
     }
 
-    private void printBlue() {
-        System.out.print(ANSI_BLUE_BACKGROUND + " " + B + " " + ANSI_RESET);
+    private String getPrefix(int x, int y) {
+        if (x == selectedX && y == selectedY) {
+            return "[";
+        }
+        return " ";
     }
 
-    private void printGreen() {
-        System.out.print(ANSI_GREEN_BACKGROUND + " " + G + " " + ANSI_RESET);
+    private String getSuffix(int x, int y) {
+        if (x == selectedX && y == selectedY) {
+            return "]";
+        }
+        return " ";
     }
 
-    private void printRed() {
-        System.out.print(ANSI_RED_BACKGROUND + " " + R + " " + ANSI_RESET);
+
+    private void printBlue(int x, int y) {
+        System.out.print(ANSI_BLUE_BACKGROUND + getPrefix(x, y) + B + getSuffix(x, y) + ANSI_RESET);
     }
 
-    private void printYellow() {
-        System.out.print(ANSI_YELLOW_BACKGROUND + " " + Y + " " + ANSI_RESET);
+    private void printGreen(int x, int y) {
+        System.out.print(ANSI_GREEN_BACKGROUND + getPrefix(x, y) + G + getSuffix(x, y) + ANSI_RESET);
+    }
+
+    private void printRed(int x, int y) {
+        System.out.print(ANSI_RED_BACKGROUND + getPrefix(x, y) + R + getSuffix(x, y) + ANSI_RESET);
+    }
+
+    private void printYellow(int x, int y) {
+        System.out.print(ANSI_YELLOW_BACKGROUND + getPrefix(x, y) + Y + getSuffix(x, y) + ANSI_RESET);
     }
 
     private void coloringImage(char[][] image) {
-        image = coloringService.coloring(image, x, y, newColor);
+        image = coloringService.coloring(image, selectedX, selectedY, newColor);
     }
 }
